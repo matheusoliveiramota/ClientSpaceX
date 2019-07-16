@@ -1,0 +1,9 @@
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\bin\Debug\netcoreapp2.2\SpaceX.Business.deps.json
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\bin\Debug\netcoreapp2.2\SpaceX.Business.dll
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\bin\Debug\netcoreapp2.2\SpaceX.Business.pdb
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\obj\Debug\netcoreapp2.2\SpaceX.Business.csprojAssemblyReference.cache
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\obj\Debug\netcoreapp2.2\SpaceX.Business.csproj.CoreCompileInputs.cache
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\obj\Debug\netcoreapp2.2\SpaceX.Business.AssemblyInfoInputs.cache
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\obj\Debug\netcoreapp2.2\SpaceX.Business.AssemblyInfo.cs
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\obj\Debug\netcoreapp2.2\SpaceX.Business.dll
+C:\Users\mmota\source\repos\SpaceX\SpaceX.Business\obj\Debug\netcoreapp2.2\SpaceX.Business.pdb
