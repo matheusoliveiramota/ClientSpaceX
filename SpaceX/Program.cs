@@ -64,6 +64,7 @@ namespace SpaceX
                                      + "    Ano de Lançamento = " + launch.LaunchYear.ToString() + "    Data de Lançamento = " + launch.LaunchDate);
                 }
 
+            Console.Read();
         }
     }
 }
