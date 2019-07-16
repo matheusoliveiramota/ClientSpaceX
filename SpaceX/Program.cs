@@ -12,8 +12,10 @@ namespace SpaceX
     {
         static void Main(string[] args)
         {
-            // Utilizando os Métodos Assíncronos de Forma Síncrona
-                DateTime begin = DateTime.Now; 
+            try
+            {
+                // Utilizando os Métodos Assíncronos de Forma Síncrona
+                DateTime begin = DateTime.Now;
                 ISpaceRepository spaceRepository = new SpaceRepository();
 
                 var nextLaunch = spaceRepository.GetNextLaunch().Result;
@@ -23,14 +25,14 @@ namespace SpaceX
 
                 Console.WriteLine("Utilizando os Métodos Assíncronos de Forma Síncrona:   Tempo Gasto = " + Convert.ToString(DateTime.Now - begin));
 
-            // Utilizando os Métodos Assíncronos de Forma Paralela
+                // Utilizando os Métodos Assíncronos de Forma Paralela
                 DateTime beginAsync = DateTime.Now;
 
                 Task<IEnumerable<Launch>>[] tasks = new Task<IEnumerable<Launch>>[4];
-                    tasks[0] = spaceRepository.GetNextLaunch();
-                    tasks[1] = spaceRepository.GetLastLaunch();
-                    tasks[2] = spaceRepository.GetPastLaunches();
-                    tasks[3] = spaceRepository.GetUpcomingLaunches();
+                tasks[0] = spaceRepository.GetNextLaunch();
+                tasks[1] = spaceRepository.GetLastLaunch();
+                tasks[2] = spaceRepository.GetPastLaunches();
+                tasks[3] = spaceRepository.GetUpcomingLaunches();
                 Task.WaitAll(tasks);
 
                 Launch nextLaunchAsync = tasks[0].Result.FirstOrDefault();
@@ -41,7 +43,7 @@ namespace SpaceX
                 Console.WriteLine("Utilizando os Métodos Assíncronos de Forma Paralela:   Tempo Gasto = " + Convert.ToString(DateTime.Now - beginAsync));
                 Console.WriteLine("");
 
-            // Informações dos Lançamentos
+                // Informações dos Lançamentos
                 Console.WriteLine("PRÓXIMO LANÇAMENTO : Número do Vôo = " + nextLaunchAsync.FlightNumber + "    Missão = " + nextLaunchAsync.MissionName
                                                      + "    Ano de Lançamento = " + nextLaunchAsync.LaunchYear.ToString() + "    Data de Lançamento = " + nextLaunchAsync.LaunchDate);
                 Console.WriteLine("");
@@ -63,6 +65,12 @@ namespace SpaceX
                     Console.WriteLine("     Número do Vôo = " + launch.FlightNumber + "    Missão = " + launch.MissionName
                                      + "    Ano de Lançamento = " + launch.LaunchYear.ToString() + "    Data de Lançamento = " + launch.LaunchDate);
                 }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Erro ao recuperar informações dos vôos !");
+                Console.WriteLine("MENSAGEM DE ERRO: " + e.Message);
+            }
 
             Console.Read();
         }
