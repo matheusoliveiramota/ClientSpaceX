@@ -14,18 +14,7 @@ namespace SpaceX
         {
             try
             {
-                // Utilizando os Métodos Assíncronos de Forma Síncrona
-                DateTime begin = DateTime.Now;
                 ISpaceRepository spaceRepository = new SpaceRepository();
-
-                var nextLaunch = spaceRepository.GetNextLaunch().Result;
-                var lastLaunch = spaceRepository.GetLastLaunch().Result;
-                var pastLaunches = spaceRepository.GetPastLaunches().Result;
-                var upcomingLaunches = spaceRepository.GetUpcomingLaunches().Result;
-
-                Console.WriteLine("Utilizando os Métodos Assíncronos de Forma Síncrona:   Tempo Gasto = " + Convert.ToString(DateTime.Now - begin));
-
-                // Utilizando os Métodos Assíncronos de Forma Paralela
                 DateTime beginAsync = DateTime.Now;
 
                 Task<IEnumerable<Launch>>[] tasks = new Task<IEnumerable<Launch>>[4];
@@ -35,24 +24,24 @@ namespace SpaceX
                 tasks[3] = spaceRepository.GetUpcomingLaunches();
                 Task.WaitAll(tasks);
 
-                Launch nextLaunchAsync = tasks[0].Result.FirstOrDefault();
-                Launch lastLaunchAsync = tasks[1].Result.FirstOrDefault();
-                IEnumerable<Launch> pastLaunchesAsync = tasks[2].Result;
-                IEnumerable<Launch> upcomingLaunchesAsync = tasks[3].Result;
+                Launch nextLaunch = tasks[0].Result.FirstOrDefault();
+                Launch lastLaunch = tasks[1].Result.FirstOrDefault();
+                IEnumerable<Launch> pastLaunches = tasks[2].Result;
+                IEnumerable<Launch> upcomingLaunches = tasks[3].Result;
 
-                Console.WriteLine("Utilizando os Métodos Assíncronos de Forma Paralela:   Tempo Gasto = " + Convert.ToString(DateTime.Now - beginAsync));
+                Console.WriteLine("Tempo gasto para realizar as requisições= " + Convert.ToString(DateTime.Now - beginAsync));
                 Console.WriteLine("");
 
                 // Informações dos Lançamentos
-                Console.WriteLine("PRÓXIMO LANÇAMENTO : Número do Vôo = " + nextLaunchAsync.FlightNumber + "    Missão = " + nextLaunchAsync.MissionName
-                                                     + "    Ano de Lançamento = " + nextLaunchAsync.LaunchYear.ToString() + "    Data de Lançamento = " + nextLaunchAsync.LaunchDate);
+                Console.WriteLine("PRÓXIMO LANÇAMENTO : Número do Vôo = " + nextLaunch.FlightNumber + "    Missão = " + nextLaunch.MissionName
+                                                     + "    Ano de Lançamento = " + nextLaunch.LaunchYear.ToString() + "    Data de Lançamento = " + nextLaunch.LaunchDate);
                 Console.WriteLine("");
-                Console.WriteLine("ÚLTIMO LANÇAMENTO : Número do Vôo = " + lastLaunchAsync.FlightNumber + "    Missão = " + lastLaunchAsync.MissionName
-                                         + "    Ano de Lançamento = " + lastLaunchAsync.LaunchYear.ToString() + "    Data de Lançamento = " + lastLaunchAsync.LaunchDate);
+                Console.WriteLine("ÚLTIMO LANÇAMENTO : Número do Vôo = " + lastLaunch.FlightNumber + "    Missão = " + lastLaunch.MissionName
+                                         + "    Ano de Lançamento = " + lastLaunch.LaunchYear.ToString() + "    Data de Lançamento = " + lastLaunch.LaunchDate);
 
                 Console.WriteLine("");
                 Console.WriteLine("LANÇAMENTOS PASSADOS: ");
-                foreach (var launch in pastLaunchesAsync)
+                foreach (var launch in pastLaunches)
                 {
                     Console.WriteLine("     Número do Vôo = " + launch.FlightNumber + "    Missão = " + launch.MissionName
                                      + "    Ano de Lançamento = " + launch.LaunchYear.ToString() + "    Data de Lançamento = " + launch.LaunchDate);
@@ -60,7 +49,7 @@ namespace SpaceX
 
                 Console.WriteLine("");
                 Console.WriteLine("LANÇAMENTOS FUTUROS: ");
-                foreach (var launch in upcomingLaunchesAsync)
+                foreach (var launch in upcomingLaunches)
                 {
                     Console.WriteLine("     Número do Vôo = " + launch.FlightNumber + "    Missão = " + launch.MissionName
                                      + "    Ano de Lançamento = " + launch.LaunchYear.ToString() + "    Data de Lançamento = " + launch.LaunchDate);
