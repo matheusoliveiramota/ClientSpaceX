@@ -28,7 +28,7 @@ namespace SpaceX.Infra.Data
             List<Launch> launches = new List<Launch>();
             var response = await _httpClient.GetAsync("v3/launches/latest");
 
-            if(response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCodeErro)
             {
                 dynamic responseContent = response.Content.ReadAsStringAsync();
 
